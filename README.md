@@ -1,98 +1,64 @@
-# vinext-starter
+# 左腳踩右腳：永動機研究所
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+一款以「數值互相抬升」為核心的短篇配點解謎遊戲。
 
-## Prerequisites
+你是永動機研究所的新進工程師。研究所交給你六個效率零件，以及一台由加熱線圈、壓力鍋爐和回收渦輪組成的實驗機器。你的任務是找出正確的零件分配方式，讓能量跑完一整圈後不減反增。
 
-- Node.js `>=22.13.0`
+## 立即遊玩
 
-## Quick Start
+**[開啟 GitHub Pages 遊戲](https://frobel0520.github.io/left-foot-right-foot/)**
+
+支援桌面與手機瀏覽器，不需要安裝。
+
+## 核心概念
+
+三台裝置形成一個完整閉環：
+
+```text
+電力 → 熱能 → 蒸汽 → 電力
+```
+
+每台裝置都有自己的轉換倍率。當三段倍率的乘積大於 `1`，能量每繞一圈就會增加，機器也就能「左腳踩右腳」地自行成長。
+
+```text
+加熱倍率 × 鍋爐倍率 × 渦輪倍率 > 1
+```
+
+## 遊戲方式
+
+1. 將六個效率零件分配給三台裝置。
+2. 使用 `＋`、`－` 調整每台裝置的等級。
+3. 用完全部零件後，按下「啟動閉環」。
+4. 觀察能量依序通過三台裝置。
+5. 三次循環後，若回收電力持續成長即可通關。
+
+零件可以自由重新分配，失敗不會造成任何懲罰。Demo 關卡只有一種有效配置。
+
+## 本機執行
+
+需要 Node.js 22 或更新版本。
 
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+建立 GitHub Pages 靜態版本：
 
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+npm run build:pages
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+輸出檔案會產生在 `pages-dist/`。推送至 `main` 分支後，GitHub Actions 會自動更新公開遊戲。
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## 技術
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+- React 19
+- TypeScript
+- Vite
+- GitHub Actions
+- GitHub Pages
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+## 專案狀態
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+目前為單關卡玩法 Demo，用來驗證「有限配點形成正回饋閉環」是否具有解謎樂趣。未來可延伸不同主題、更多節點、條件式倍率與連鎖副作用。
