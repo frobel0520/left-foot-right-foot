@@ -166,6 +166,9 @@ export default function Home() {
           <strong>{completed.length}</strong>
           <span>/ 10 完成</span>
         </div>
+        <a className="more-games" href="https://playmint.pages.dev/">
+          更多遊戲<span aria-hidden="true"> ↗</span>
+        </a>
       </header>
 
       <nav className="level-rail" aria-label="關卡選擇">

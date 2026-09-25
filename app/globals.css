@@ -146,6 +146,23 @@ h1 {
   font-size: 11px;
 }
 
+.more-games {
+  flex: 0 0 auto;
+  padding: 10px 13px;
+  color: var(--header-ink);
+  border: 1px solid color-mix(in srgb, var(--header-ink) 40%, transparent);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.more-games:hover,
+.more-games:focus-visible {
+  border-color: var(--header-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .level-rail {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -1145,7 +1162,8 @@ footer {
     padding-left: 15px;
   }
 
-  .completion-counter {
+  .completion-counter,
+  .more-games {
     padding: 7px;
   }
 
@@ -1233,6 +1251,19 @@ footer {
   .brand-mark {
     width: 46px;
     height: 46px;
+  }
+
+  .site-header {
+    gap: 10px;
+  }
+
+  .more-games {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .more-games span {
+    display: none;
   }
 
   h1 {
