@@ -10,6 +10,8 @@
 
 支援桌面與手機瀏覽器，不需要安裝。
 
+本作收錄在解謎小品入口 [Playmint](https://playmint.pages.dev/)；頁首的「更多遊戲」連結會回到 Playmint（2026-09-25 起）。
+
 ## 核心概念
 
 每一關的裝置都會形成一個完整閉環。例如第一關：
@@ -56,6 +58,8 @@ npm install
 npm run dev
 ```
 
+`npm run dev` 使用 vinext（Vite 上的 Next.js App Router 相容層）啟動 `app/` 裡的遊戲。`npm test` 會先建置再檢查輸出的 HTML。
+
 建立 GitHub Pages 靜態版本：
 
 ```bash
@@ -71,6 +75,17 @@ npm run build:pages
 - Vite
 - GitHub Actions
 - GitHub Pages
+- Harbor 維護畫面腳本（2026-09-15 起）：Harbor 開啟維護模式時顯示全螢幕維護畫面，連不上時遊戲照常顯示
+
+## 目錄
+
+```text
+app/                 遊戲本體（App Router 頁面、關卡資料、樣式）
+github-pages/        GitHub Pages 版的 index.html（含 Harbor 腳本）
+vite.pages.config.ts GitHub Pages 靜態建置設定，輸出到 pages-dist/
+tests/               建置後的 HTML 檢查
+worker/ db/ drizzle/ examples/  vinext Cloudflare 範本留下的骨架；db/schema.ts 目前是空的，公開版沒有使用資料庫
+```
 
 ## 專案狀態
 
