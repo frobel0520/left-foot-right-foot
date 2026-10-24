@@ -1,0 +1,45 @@
+{
+  "taskId": "SEC-P2-20261025",
+  "date": "2026-10-25",
+  "name": "left-foot-right-foot",
+  "baseCommit": "a59e22d29f57f5b680d919b3c12e05c8b23dbd93",
+  "baseBranch": "main",
+  "branch": "feature/sec-p2-20261025",
+  "state": "隔離修補已備妥，待整合",
+  "change": "精準更新drizzle-kit0.31.11；只在@esbuild-kit/core-utils覆寫esbuild0.25.12、satori覆寫fflate0.7.5，8項moderate在此隔離分支歸零，未退回舊major掩蓋公告。",
+  "checks": [
+    "原8 moderate→native audit全等級0",
+    "production build／實際TS transform執行／ZIP正常及畸形拒絕／Satori SVG／Drizzle空schema讀取",
+    "既有P1首關與保存證據只沿用未改的遊戲程式；舊starter test／lint發布缺口未宣稱修好"
+  ],
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "python": null,
+  "securityGate": "passed_within_checked_scope",
+  "performance": {
+    "beforeGzipBytes": 460242,
+    "afterGzipBytes": 461228,
+    "growth": 0.0021423511978480884,
+    "thresholdGrowth": 0.05,
+    "result": "pass",
+    "scope": "Local gzip bundle size, not production latency"
+  },
+  "validation": "精準更新drizzle-kit0.31.11；只在@esbuild-kit/core-utils覆寫esbuild0.25.12、satori覆寫fflate0.7.5，8項moderate在此隔離分支歸零，未退回舊major掩蓋公告。 原8 moderate→native audit全等級0；production build／實際TS transform執行／ZIP正常及畸形拒絕／Satori SVG／Drizzle空schema讀取；既有P1首關與保存證據只沿用未改的遊戲程式；舊starter test／lint發布缺口未宣稱修好",
+  "integrationNeeded": true,
+  "pushed": false,
+  "deployed": false,
+  "merged": false,
+  "noreplyIdentityVerified": true,
+  "actionPins": 5,
+  "monthlyCost": "Local checks only. No paid APIs, cloud data writes, new recurring services, remote CI, merge or deployment.",
+  "limitations": [
+    "原始工作目錄、未提交修改與分支全部保留；本報告僅適用此隔離分支。",
+    "完整history／秘密輪替／正式服務與二進位鑑識不在此輪驗收，未評項目not_scored。"
+  ]
+}
