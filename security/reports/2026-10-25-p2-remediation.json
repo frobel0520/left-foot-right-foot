@@ -3,7 +3,7 @@
   "date": "2026-10-25",
   "name": "left-foot-right-foot",
   "baseCommit": "a59e22d29f57f5b680d919b3c12e05c8b23dbd93",
-  "baseBranch": "main",
+  "baseBranch": "feature/sec-p1-20261024",
   "branch": "feature/sec-p2-20261025",
   "state": "隔離修補已備妥，待整合",
   "change": "精準更新drizzle-kit0.31.11；只在@esbuild-kit/core-utils覆寫esbuild0.25.12、satori覆寫fflate0.7.5，8項moderate在此隔離分支歸零，未退回舊major掩蓋公告。",
