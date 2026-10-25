@@ -1,0 +1,150 @@
+{
+  "task": "SEC-P1-20261024",
+  "base": "f3c184eaa175dcd629cf8bbe86e67e4b22ab6de0",
+  "goal": "Remove reviewed high/critical dependency exposures and repair authorized security boundaries",
+  "input": "Pinned remote base, lockfile, synthetic fixtures",
+  "output": "Focused source/dependency patch and this evidence",
+  "depends_on": [],
+  "out_of_scope": [
+    "deployment",
+    "real user data",
+    "history rewriting",
+    "unrelated refactors"
+  ],
+  "environment": {
+    "platform": "Windows x64",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "node": "24.22.1",
+    "installation": "npm ci --ignore-scripts --no-audit --no-fund",
+    "execution": "sequential projects; test workers <=2"
+  },
+  "audit": [
+    {
+      "app": "",
+      "counts": {
+        "info": 0,
+        "low": 0,
+        "moderate": 8,
+        "high": 0,
+        "critical": 0,
+        "total": 8
+      }
+    }
+  ],
+  "changes": [
+    {
+      "app": "",
+      "section": "dependencies",
+      "name": "next",
+      "before": "16.4.2",
+      "after": "16.4.3"
+    },
+    {
+      "app": "",
+      "section": "devDependencies",
+      "name": "eslint-config-next",
+      "before": "16.4.2",
+      "after": "16.4.3"
+    },
+    {
+      "app": "",
+      "section": "overrides",
+      "name": "undici@>=7 <8",
+      "before": null,
+      "after": "7.30.1"
+    }
+  ],
+  "checks": [
+    {
+      "name": "left-foot-right-foot",
+      "app": "",
+      "args": [
+        "test"
+      ],
+      "code": 1,
+      "seconds": 5.48
+    },
+    {
+      "name": "left-foot-right-foot",
+      "app": "",
+      "args": [
+        "run",
+        "typecheck"
+      ],
+      "code": 1,
+      "seconds": 0.225
+    },
+    {
+      "name": "left-foot-right-foot",
+      "app": "",
+      "args": [
+        "run",
+        "lint"
+      ],
+      "code": 1,
+      "seconds": 5.168
+    },
+    {
+      "name": "left-foot-right-foot",
+      "app": "",
+      "args": [
+        "run",
+        "build"
+      ],
+      "code": 0,
+      "seconds": 3.552
+    }
+  ],
+  "performance": {
+    "name": "left-foot-right-foot",
+    "app": "",
+    "base": "f3c184eaa175dcd629cf8bbe86e67e4b22ab6de0",
+    "metric": "client JS+CSS gzip bytes, level 9",
+    "threshold": "after <= before * 1.05",
+    "before": {
+      "bytes": 268266,
+      "gzipBytes": 83038,
+      "files": 2
+    },
+    "after": {
+      "bytes": 268254,
+      "gzipBytes": 83034,
+      "files": 2
+    },
+    "ratio": 0.9999518292829789,
+    "pass": true,
+    "environment": "Windows x64, Node 24.22.1, same source/mode, sequential; fixture config, not deployed"
+  },
+  "dependency_gate": "passed",
+  "regression_gate": "blocked_by_existing_baseline_test_and_lint_failures",
+  "ci": "not_run",
+  "release_gate": "pending_review_and_CI",
+  "deployed": false,
+  "model_rating": "not_scored",
+  "monthly_cost": "No new services, billing plans or paid API introduced; synthetic verification uses local tools. Production quota/traffic acceptance not performed.",
+  "limitations": [
+    "Public npm advisories are a point-in-time dependency check, not full SAST, history or binary compromise analysis.",
+    "Build and fixture performance do not establish production latency.",
+    "Default machine Node 24.14.1 remains outside the portable verification runtime.",
+    "Original fixed base reproduces obsolete skeleton test failures and set-state-in-effect lint error; missing typecheck npm script is not a passing check. Production build and real first-level keyboard/progress flows at1280/375 pass. Eight moderate findings remain in existing vinext/drizzle tooling."
+  ],
+  "browser": {
+    "scope": "production build, isolated local server, synthetic browser state; external requests blocked; one core flow only, not full curriculum/game acceptance",
+    "results": [
+      {
+        "width": 1280,
+        "pageErrors": [],
+        "overflow": false,
+        "buttons": 18,
+        "interaction": "allocated synthetic solution, launched with keyboard, completed first level, progress persisted and next level restored"
+      },
+      {
+        "width": 375,
+        "pageErrors": [],
+        "overflow": false,
+        "buttons": 18,
+        "interaction": "allocated synthetic solution, launched with keyboard, completed first level, progress persisted and next level restored"
+      }
+    ]
+  }
+}
