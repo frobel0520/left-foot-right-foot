@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { LEVELS } from "./levels";
 
 type GameStatus = "setup" | "running" | "success" | "failure";
@@ -21,15 +21,41 @@ function getLoopRate(levelIndex: number, allocation: number[]) {
   );
 }
 
+const subscribeToBrowser = () => () => {};
+const browserSnapshot = () => true;
+const serverSnapshot = () => false;
+
+function loadCompletedLevels(): number[] {
+  try {
+    const stored: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
+    if (!Array.isArray(stored)) return [];
+    return [...new Set(stored.filter(
+      (value): value is number =>
+        Number.isInteger(value) && value >= 1 && value <= LEVELS.length,
+    ))];
+  } catch {
+    return [];
+  }
+}
+
 export default function Home() {
-  const [levelIndex, setLevelIndex] = useState(0);
-  const [allocation, setAllocation] = useState(() => makeEmptyAllocation(0));
+  // Keep the server and hydration snapshots identical, then initialize the
+  // browser game once from its external saved progress without effect updates.
+  const isBrowser = useSyncExternalStore(subscribeToBrowser, browserSnapshot, serverSnapshot);
+  return <Game key={isBrowser ? "browser" : "server"} initialCompleted={isBrowser ? loadCompletedLevels() : []} />;
+}
+
+function Game({ initialCompleted }: { initialCompleted: number[] }) {
+  const firstOpen = LEVELS.findIndex((candidate) => !initialCompleted.includes(candidate.id));
+  const initialLevelIndex = firstOpen > 0 ? firstOpen : 0;
+  const [levelIndex, setLevelIndex] = useState(initialLevelIndex);
+  const [allocation, setAllocation] = useState(() => makeEmptyAllocation(initialLevelIndex));
   const [status, setStatus] = useState<GameStatus>("setup");
   const [activeMachine, setActiveMachine] = useState(-1);
   const [energy, setEnergy] = useState(STARTING_ENERGY);
   const [cycle, setCycle] = useState(0);
   const [log, setLog] = useState("等待配置");
-  const [completed, setCompleted] = useState<number[]>([]);
+  const [completed, setCompleted] = useState<number[]>(initialCompleted);
 
   const level = LEVELS[levelIndex];
   const used = allocation.reduce((sum, value) => sum + value, 0);
@@ -40,28 +66,6 @@ export default function Home() {
   );
   const maxCompleted = completed.length ? Math.max(...completed) : 0;
   const highestUnlocked = Math.min(LEVELS.length, maxCompleted + 1);
-
-  useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
-      if (Array.isArray(stored)) {
-        const clean = stored.filter(
-          (value): value is number =>
-            Number.isInteger(value) && value >= 1 && value <= LEVELS.length,
-        );
-        setCompleted(clean);
-        const firstOpen = LEVELS.findIndex(
-          (candidate) => !clean.includes(candidate.id),
-        );
-        if (firstOpen > 0) {
-          setLevelIndex(firstOpen);
-          setAllocation(makeEmptyAllocation(firstOpen));
-        }
-      }
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }, []);
 
   function resetExperiment(nextLevelIndex = levelIndex) {
     setAllocation(makeEmptyAllocation(nextLevelIndex));
