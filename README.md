@@ -68,11 +68,14 @@ Repository 根目錄未見授權檔；此 README 不另行宣告使用或再散�
 需要 Node.js 22 或更新版本。
 
 ```bash
-npm install
+npm ci
+npx playwright install chromium
 npm run dev
 ```
 
-`npm run dev` 使用 vinext（Vite 上的 Next.js App Router 相容層）啟動 `app/` 裡的遊戲。`npm test` 會先建置再檢查輸出的 HTML。
+`npm run dev` 使用 vinext（Vite 上的 Next.js App Router 相容層）啟動 `app/` 裡的遊戲。`npm test` 會建置 SSR 與 Pages，透過本機 Workers runtime 與 Chromium 驗證真實遊戲；不使用正式服務或資料。接著執行 `npm run typecheck` 與 `npm run lint`。
+
+測試包含十關通關、失敗不解鎖、重試、有效／異常存檔、SSR hydration、鍵盤及 320px 無水平溢出。動畫採虛擬時間；本機暖互動另以真實時間量測 20 次，p95 門檻 100ms，不能視為正式網路載入速度。CI 使用公開庫免費 runner，只有讀取權限，最長 10 分鐘。
 
 建立 GitHub Pages 靜態版本：
 
@@ -97,6 +100,6 @@ npm run build:pages
 app/                 遊戲本體（App Router 頁面、關卡資料、樣式）
 github-pages/        GitHub Pages 版的 index.html（含 Harbor 腳本）
 vite.pages.config.ts GitHub Pages 靜態建置設定，輸出到 pages-dist/
-tests/               建置後的 HTML 檢查
+tests/               真實 SSR 與 Chromium 遊戲回歸
 worker/ db/ drizzle/ examples/  vinext Cloudflare 範本留下的骨架；db/schema.ts 目前是空的，公開版沒有使用資料庫
 ```
