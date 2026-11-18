@@ -116,7 +116,7 @@ button:focus-visible {
 .eyebrow,
 .section-label {
   margin: 0 0 5px;
-  font: 700 10px/1.3 var(--font-geist-mono), monospace;
+  font: 700 11px/1.3 var(--font-geist-mono), monospace;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -148,6 +148,9 @@ h1 {
 
 .more-games {
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   padding: 10px 13px;
   color: var(--header-ink);
   border: 1px solid color-mix(in srgb, var(--header-ink) 40%, transparent);
@@ -219,7 +222,7 @@ h1 {
 }
 
 .level-rail span {
-  font: 700 10px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
 }
 
 .level-rail i {
@@ -250,7 +253,7 @@ h1 {
 }
 
 .level-number span {
-  font: 700 8px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
   letter-spacing: 0.1em;
 }
 
@@ -361,7 +364,7 @@ h1 {
   border: 1px solid var(--line);
   background: var(--accent-2);
   box-shadow: 2px 2px 0 var(--line);
-  font: 800 10px/1 var(--font-geist-mono), monospace;
+  font: 800 11px/1 var(--font-geist-mono), monospace;
   transition: 160ms ease;
 }
 
@@ -385,7 +388,7 @@ h1 {
   padding: 4px 7px;
   color: var(--header-ink);
   background: var(--accent);
-  font: 700 9px/1.2 var(--font-geist-mono), monospace;
+  font: 700 11px/1.2 var(--font-geist-mono), monospace;
 }
 
 .hint p {
@@ -467,7 +470,7 @@ h1 {
   top: 7px;
   right: 8px;
   color: color-mix(in srgb, var(--muted) 65%, transparent);
-  font: 700 9px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
 }
 
 .machine-heading {
@@ -491,7 +494,7 @@ h1 {
 
 .machine-heading small {
   color: var(--muted);
-  font: 700 9px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
 }
 
 .machine-heading h3 {
@@ -506,7 +509,7 @@ h1 {
   align-items: center;
   gap: 5px;
   margin: 16px 0 10px;
-  font-size: 10px;
+  font-size: 11px;
   text-align: center;
 }
 
@@ -528,7 +531,7 @@ h1 {
 
 .efficiency span {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .efficiency strong {
@@ -554,7 +557,7 @@ h1 {
 
 .stepper {
   display: grid;
-  grid-template-columns: 36px 1fr 36px;
+  grid-template-columns: 40px 1fr 40px;
   align-items: center;
   border: 1px solid var(--line);
   text-align: center;
@@ -566,11 +569,11 @@ h1 {
 
 .stepper strong small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .stepper button {
-  height: 34px;
+  height: 40px;
   color: var(--header-ink);
   background: var(--header);
   border: 0;
@@ -594,7 +597,7 @@ h1 {
   justify-content: space-between;
   margin-top: 10px;
   color: var(--accent);
-  font: 700 9px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
 }
 
 .return-line {
@@ -605,7 +608,7 @@ h1 {
   border-right: 2px solid;
   border-bottom: 2px solid;
   border-left: 2px solid;
-  font: 700 10px/1.2 var(--font-geist-mono), monospace;
+  font: 700 11px/1.2 var(--font-geist-mono), monospace;
   text-align: center;
 }
 
@@ -632,7 +635,7 @@ h1 {
 .energy-readout small {
   display: block;
   color: color-mix(in srgb, var(--header-ink) 62%, transparent);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.11em;
 }
 
@@ -657,7 +660,7 @@ h1 {
 
 .console-log small {
   color: color-mix(in srgb, var(--header-ink) 58%, transparent);
-  font: 700 9px/1 var(--font-geist-mono), monospace;
+  font: 700 11px/1 var(--font-geist-mono), monospace;
 }
 
 .console-log p {
@@ -755,7 +758,7 @@ footer {
   color: var(--muted);
   background: var(--panel-2);
   border-top: 2px solid var(--line);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Ten visual worlds */
@@ -1173,7 +1176,7 @@ footer {
   }
 
   .level-rail {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .level-rail button:nth-child(-n + 5) {
