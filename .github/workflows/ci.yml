@@ -19,7 +19,8 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Dependency audit (high/critical fails)
-        run: npm audit --audit-level=high
+        # 限期例外清單：security/audit-exceptions.json（到期自動恢復擋下）
+        run: node scripts/audit-gate.mjs npm
       - run: npx playwright install --with-deps chromium
       - run: npm run lint
       - run: npm test
